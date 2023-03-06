@@ -19,9 +19,8 @@ const getConnection = async () => {
     return pool;
   } catch (error) {
     console.error(error);
-  }code . 
-  
-};
+  } 
+}
 
 module.exports = { sql, getConnection };
 
