@@ -30,6 +30,8 @@ client.on('ready', async () => {
 })
 client.on('message', async message => {
   // const compiledTemplate = handlebars.compile(template);
+  console.log(message.from)
+  console.log(message.fromMe)
   if (message.fromMe) {
 
     const result = await WorkoutPlan.find({ dateWorkout: { $eq: new Date(new Date().setHours(-6, 0, 0, 0)) } });
