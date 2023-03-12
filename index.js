@@ -33,25 +33,28 @@ client.on('message', async message => {
   console.log(message.body)
   // if (message.fromMe) {
 
-  // const result = await WorkoutPlan.find({ dateWorkout: { $eq: new Date(new Date().setHours(-6, 0, 0, 0)) } });
-  // const data = JSON.parse(JSON.stringify(result));
-  // client.sendMessage(message.from, data);
+
   // }
   // if (message.fromMe) {
+  setInterval(async () => {
+    let startOfWeek = new Date();
+    startOfWeek.setHours(-6, 0, 0, 0);
+    startOfWeek.setDate(startOfWeek.getDate() - startOfWeek.getDay());
+    let endOfWeek = new Date(startOfWeek.getTime());
+    endOfWeek.setDate(endOfWeek.getDate() + 6);
+    let result = await WorkoutPlan.find({
+      dateWorkout: {
+        $gte: startOfWeek,
+        $lte: endOfWeek
+      }
+    });
+    let data = JSON.parse(JSON.stringify(result));
+    client.sendMessage("5216145994188@c.us", data);
+    result = await WorkoutPlan.find({ dateWorkout: { $eq: new Date(new Date().setHours(-6, 0, 0, 0)) } });
+    data = JSON.parse(JSON.stringify(result));
+    client.sendMessage(message.from, data);
+  }, 30000);
 
-  const startOfWeek = new Date();
-  startOfWeek.setHours(-6, 0, 0, 0);
-  startOfWeek.setDate(startOfWeek.getDate() - startOfWeek.getDay());
-  const endOfWeek = new Date(startOfWeek.getTime());
-  endOfWeek.setDate(endOfWeek.getDate() + 6);
-  const result = await WorkoutPlan.find({
-    dateWorkout: {
-      $gte: startOfWeek,
-      $lte: endOfWeek
-    }
-  });
-  const data = JSON.parse(JSON.stringify(result));
-  client.sendMessage("5216145994188@c.us", data);
   // }
 })
 
