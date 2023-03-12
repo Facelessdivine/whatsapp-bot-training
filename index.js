@@ -30,11 +30,12 @@ client.on('ready', async () => {
 })
 client.on('message', async message => {
   // const compiledTemplate = handlebars.compile(template);
-  let f = false
+
   if (message.body === '/d') {
     f = true
     const result = await WorkoutPlan.find({ dateWorkout: { $eq: new Date(new Date().setHours(-6, 0, 0, 0)) } });
-
+    const data = JSON.parse(JSON.stringify(result));
+    client.sendMessage(message.from, data);
   }
   if (message.body === '/w') {
     f = true
@@ -49,12 +50,9 @@ client.on('message', async message => {
         $lte: endOfWeek
       }
     });
+    const data = JSON.parse(JSON.stringify(result));
+    client.sendMessage(message.from, data);
   }
-  if(!f){
-    return
-  }
-  const data = JSON.parse(JSON.stringify(result));
-  client.sendMessage(message.from, data);
 })
 
 client.initialize()
