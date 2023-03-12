@@ -30,15 +30,14 @@ client.on('ready', async () => {
 })
 client.on('message', async message => {
   // const compiledTemplate = handlebars.compile(template);
+  if (message.fromMe) {
 
-  if (message.body === '/d') {
-    f = true
     const result = await WorkoutPlan.find({ dateWorkout: { $eq: new Date(new Date().setHours(-6, 0, 0, 0)) } });
     const data = JSON.parse(JSON.stringify(result));
     client.sendMessage(message.from, data);
   }
-  if (message.body === '/w') {
-    f = true
+  if (message.fromMe) {
+
     const startOfWeek = new Date();
     startOfWeek.setHours(-6, 0, 0, 0);
     startOfWeek.setDate(startOfWeek.getDate() - startOfWeek.getDay());
