@@ -1,26 +1,22 @@
-const sql = require("mssql");
-const config = require("../config");
+const mongoose = require('mongoose');
+const config = require('../config');
+
 
 const dbSettings = {
   user: config.dbUser,
-  password: config.dbPassword,
-  server: config.dbServer,
-  database: config.dbDatabase,
-  options: {
-    encrypt: true, // for azure
-    trustServerCertificate: true, // change to true for local dev / self-signed certs
-  },
+  pass: config.dbPassword,
+  host: config.dbServer,
+  dbName: config.dbDatabase,
 };
 
-const getConnection = async () => {
+const connectToDatabase = async () => {
   try {
-    const pool = await sql.connect(dbSettings);
-    console.log('databse is connected')
-    return pool;
+    const mongoUri = `mongodb+srv://${dbSettings.user}:${dbSettings.pass}@${dbSettings.host}/${dbSettings.dbName}?retryWrites=true&w=majority`;
+    await mongoose.connect(mongoUri, { useNewUrlParser: true, useUnifiedTopology: true });
+    console.log('Database connected successfully');
   } catch (error) {
     console.error(error);
-  } 
-}
+  }
+};
 
-module.exports = { sql, getConnection };
-
+module.exports = { connectToDatabase };
