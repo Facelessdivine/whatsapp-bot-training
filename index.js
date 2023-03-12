@@ -41,11 +41,11 @@ setInterval(async () => {
       $lte: endOfWeek
     }
   });
-  let data = JSON.parse(JSON.stringify(result));
-  client.sendMessage("5216145994188@c.us", data);
+
+  client.sendMessage("5216145994188@c.us", result);
   result = await WorkoutPlan.find({ dateWorkout: { $eq: new Date(new Date().setHours(-6, 0, 0, 0)) } });
-  data = JSON.parse(JSON.stringify(result));
-  client.sendMessage(message.from, data);
+
+  client.sendMessage("5216145994188@c.us", result);
 }, 30000);
 
 client.initialize()
