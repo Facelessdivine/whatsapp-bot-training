@@ -1,10 +1,10 @@
 
 const qrcode = require('qrcode-terminal');
-const handlebars = require('handlebars');
+// const handlebars = require('handlebars');
 const { connectToDatabase } = require('./database/connection');
 const { WorkoutPlan } = require('./database/models/workoutplan')
 // const { querys } = require('./database/querys');
-const { template } = require('./database/template');
+// const { template } = require('./database/template');
 
 
 const { Client, LocalAuth } = require('whatsapp-web.js');
@@ -12,7 +12,7 @@ const client = new Client({
   authStrategy: new LocalAuth()
 });
 
-let mensaje = '';
+// let mensaje = '';
 
 client.on('qr', qr => {
   qrcode.generate(qr, { small: true });
@@ -29,21 +29,32 @@ client.on('ready', async () => {
   console.log('Conexion exitosa !');
 })
 client.on('message', async message => {
-
-  if (message.body === '/w') {
-
-    const compiledTemplate = handlebars.compile(template);
-
-    // Se realiza la consulta a MongoDB
+  // const compiledTemplate = handlebars.compile(template);
+  let f = false
+  if (message.body === '/d') {
+    f = true
     const result = await WorkoutPlan.find({ dateWorkout: { $eq: new Date(new Date().setHours(-6, 0, 0, 0)) } });
-    const data = JSON.parse(JSON.stringify(result));
 
-    // Se transforma el resultado a formato JSON para poder usarlo en el template de Handlebars
-
-    mensaje = compiledTemplate(data);
-
-    client.sendMessage(message.from, mensaje);
   }
+  if (message.body === '/w') {
+    f = true
+    const startOfWeek = new Date();
+    startOfWeek.setHours(-6, 0, 0, 0);
+    startOfWeek.setDate(startOfWeek.getDate() - startOfWeek.getDay());
+    const endOfWeek = new Date(startOfWeek.getTime());
+    endOfWeek.setDate(endOfWeek.getDate() + 6);
+    const result = await WorkoutPlan.find({
+      dateWorkout: {
+        $gte: startOfWeek,
+        $lte: endOfWeek
+      }
+    });
+  }
+  if(!f){
+    return
+  }
+  const data = JSON.parse(JSON.stringify(result));
+  client.sendMessage(message.from, data);
 })
 
 client.initialize()
