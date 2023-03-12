@@ -29,7 +29,6 @@ client.on('ready', async () => {
   console.log('Conexion exitosa !');
 })
 client.on('message', async message => {
-  console.log(message.from)
 
   if (message.body === '/w') {
 
