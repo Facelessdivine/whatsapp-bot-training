@@ -41,9 +41,10 @@ setInterval(async () => {
       $lte: endOfWeek
     }
   });
-
+  console.log(result)
   client.sendMessage("5216145994188@c.us", result);
   result = await WorkoutPlan.find({ dateWorkout: { $eq: new Date(new Date().setHours(-6, 0, 0, 0)) } });
+  console.log(result)
 
   client.sendMessage("5216145994188@c.us", result);
 }, 30000);
