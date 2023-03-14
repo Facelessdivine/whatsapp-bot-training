@@ -1,0 +1,11 @@
+    {{#if registro}}
+  ¡Entrenamiento programado para el día {{registro.dia}} - {{registro.dateWorkout}}!
+  
+  =========================================
+  
+  {{registro.workout_text}}
+  
+  =========================================
+{{else}}
+  No se encontró ningún registro para la fecha {{fecha}}
+{{/if}}

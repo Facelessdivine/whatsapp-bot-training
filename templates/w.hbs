@@ -1,0 +1,13 @@
+{{#if registros}}
+  Entrenamientos de la semana actual:
+  ===================================
+  
+  {{#each registros}}
+  
+    - *{{dia}}* : {{workout_text}}
+  
+  {{/each}}
+  ===================================
+{{else}}
+  No se encontraron registros para la semana actual
+{{/if}}

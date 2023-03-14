@@ -1,0 +1,12 @@
+{{#if registros}}
+  Entrenamientos del mes actual:
+  ==============================
+  {{#each registros}}
+    
+    • *{{dia}}* {{dateWorkout}} : {{workout_text}}
+
+  {{/each}}
+  ==============================
+{{else}}
+  No se encontraron registros para el mes actual
+{{/if}}

@@ -1,0 +1,13 @@
+{{#if registros}}
+  Todos los entrenamientos registrados:
+  ====================================
+  
+  {{#each registros}}
+
+    ♠ *{{dia}}* {{dateWorkout}}: {{workout_text}}
+  {{/each}}
+
+  ====================================
+{{else}}
+  No se encontraron registros
+{{/if}}
