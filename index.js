@@ -19,12 +19,11 @@ client.on('qr', qr => {
 //Si la conexión es exitosa muestra el mensaje de conexión exitosa
 client.on('ready', async () => {
   await connectToDatabase()
-  const res = await users.find().sort({ createdAt: -1 }).limit(1)
+  // const res = await users.find().sort({ createdAt: -1 }).limit(1)
   // console.log(res)
-  const from = res[0]?.from || "5216145994188@c.us"
-  const author = res[0]?.author || "Señor"
-  client.sendMessage(from, 'Si es tan amable')
-  client.sendMessage(from, 'El bot esta listo para ser probado, Señor ' + author)
+  // const from = res[0]?.from || "5216145994188@c.us"
+  // const author = res[0]?.author || "Señor"
+  client.sendMessage("5216145994188@c.us", 'El bot esta listo para ser probado, Señor ')
   console.log('Conexion exitosa !');
 })
 
@@ -59,7 +58,7 @@ client.on('message', async (msg) => {
           }
           const templateD = handlebars.compile(fs.readFileSync('templates/d.hbs', 'utf8'));
           const resD = templateD({ registro, fecha: date });
-          client.sendMessage(msg.from, resD);
+          client.sendMessage("5216145994188@c.us", resD);
           break;
 
         case 'w':
@@ -72,14 +71,14 @@ client.on('message', async (msg) => {
           const resultW = docsW.map(item => item.toObject());
           const templateW = handlebars.compile(fs.readFileSync('templates/w.hbs', 'utf8'));
           const resW = templateW({ registros: resultW });
-          client.sendMessage(msg.from, resW);
+          client.sendMessage("5216145994188@c.us", resW);
           break;
         case 'm':
           const docsM = await collection.find({ mes })
           const resultM = docsM.map(item => item.toObject());
           const templateM = handlebars.compile(fs.readFileSync('templates/m.hbs', 'utf8'));
           const resM = templateM({ registros: resultM });
-          client.sendMessage(msg.from, resM);
+          client.sendMessage("5216145994188@c.us", resM);
           break;
 
         case 'a':
@@ -87,7 +86,7 @@ client.on('message', async (msg) => {
           const resultA = docsA.map(item => item.toObject())
           const templateA = handlebars.compile(fs.readFileSync('templates/a.hbs', 'utf8'));
           const resA = templateA({ registros: resultA });
-          client.sendMessage(msg.from, resA);
+          client.sendMessage("5216145994188@c.us", resA);
           break;
 
         case 't':
@@ -97,16 +96,16 @@ client.on('message', async (msg) => {
           // console.log(resultT)
           const templateT = handlebars.compile(fs.readFileSync('templates/t.hbs', 'utf8'));
           const resT = templateT({ workout_text, dia });
-          client.sendMessage(msg.from, resT);
+          client.sendMessage("5216145994188@c.us", resT);
           break;
 
         default:
-          client.sendMessage(msg.from, 'Comando no reconocido');
+          client.sendMessage("5216145994188@c.us", 'Comando no reconocido');
           break;
       }
     } catch (err) {
       console.error(err);
-      client.sendMessage(msg.from, 'Error al procesar la consulta');
+      client.sendMessage("5216145994188@c.us", 'Error al procesar la consulta');
     }
   }
 });
