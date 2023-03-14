@@ -19,10 +19,10 @@ client.on('qr', qr => {
 //Si la conexión es exitosa muestra el mensaje de conexión exitosa
 client.on('ready', async () => {
   await connectToDatabase()
-  const res = await users.findOne({}, { sort: { created_at: -1 } })
+  const res = await users.find().sort({ createdAt: -1 }).limit(1)
   // console.log(res)
-  const from = res?.from || "5216145994188@c.us"
-  const author = res?.author || "Señor"
+  const from = res[0]?.from || "5216145994188@c.us"
+  const author = res[0]?.author || "Señor"
   client.sendMessage(from, 'Si es tan amable')
   client.sendMessage(from, 'El bot esta listo para ser probado, Señor ' + author)
   console.log('Conexion exitosa !');
