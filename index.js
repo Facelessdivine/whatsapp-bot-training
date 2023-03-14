@@ -1,7 +1,8 @@
 
 const qrcode = require('qrcode-terminal');
 const handlebars = require('handlebars');
-const moment = require('moment');
+const moment = require('moment-timezone');
+moment.tz.setDefault('America/Chihuahua');
 const fs = require('fs');
 const { connectToDatabase } = require('./database/connection');
 const { WorkoutPlan } = require('./database/models/workoutplan')
